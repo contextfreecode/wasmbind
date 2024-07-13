@@ -1,11 +1,4 @@
-#[no_mangle]
-pub extern "C" fn escapeHtml(ptr: *const u8, len: usize) -> *mut VecInfo<u8> {
-    let text = unsafe { std::slice::from_raw_parts(ptr, len) };
-    let text = std::str::from_utf8(text).unwrap();
-    let result = escape_html(text).into_bytes();
-    VecInfo::from_vec(result)
-}
-
+/// The function we want to export to wasm.
 pub fn escape_html(text: &str) -> String {
     let mut result = String::with_capacity(text.len());
     for c in text.chars() {
@@ -16,6 +9,14 @@ pub fn escape_html(text: &str) -> String {
         }
     }
     result
+}
+
+#[no_mangle]
+pub extern "C" fn escapeHtml(ptr: *const u8, len: usize) -> *mut VecInfo<u8> {
+    let text = unsafe { std::slice::from_raw_parts(ptr, len) };
+    let text = std::str::from_utf8(text).unwrap();
+    let result = escape_html(text).into_bytes();
+    VecInfo::from_vec(result)
 }
 
 #[no_mangle]

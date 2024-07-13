@@ -1,5 +1,3 @@
-use wasm_bindgen::prelude::wasm_bindgen;
-
 #[wasm_bindgen(js_name = "escapeHtml")]
 pub fn escape_html(text: &str) -> String {
     let mut result = String::with_capacity(text.len());
@@ -12,3 +10,5 @@ pub fn escape_html(text: &str) -> String {
     }
     result
 }
+
+use wasm_bindgen::prelude::wasm_bindgen;
